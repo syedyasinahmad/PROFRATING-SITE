@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Connect — Your Human Search Engine</title>
+  <meta name="description" content="Campus Connect is the human search engine for your college campus. Find people, skills, resources, and events around you." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo" id="nav-logo-btn">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="8" stroke="url(#lg1)" stroke-width="2"/>
+            <path d="M21 21l-4.35-4.35" stroke="url(#lg2)" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="lg1" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6EE7FF"/>
+                <stop offset="1" stop-color="#A855F7"/>
+              </linearGradient>
+              <linearGradient id="lg2" x1="16" y1="16" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6EE7FF"/>
+                <stop offset="1" stop-color="#A855F7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">Campus<span class="logo-accent">Connect</span></span>
+      </div>
+      <div class="nav-links">
+        <a href="#" class="nav-link active" id="nav-home" onclick="showPage('home'); return false;">Home</a>
+        <a href="#" class="nav-link" id="nav-discover" onclick="showPage('discover'); return false;">Discover</a>
+        <a href="#" class="nav-link" id="nav-profile" onclick="showPage('profile'); return false;">My Profile</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-add-resource" id="add-resource-btn" onclick="openAddResourceModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Resource
+        </button>
+        <div class="nav-avatar" onclick="showPage('profile')" title="My Profile">A</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ PAGE: HOME ============ -->
+  <div id="page-home" class="page active">
+    <section class="hero">
+      <div class="hero-bg-blobs">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>HUMAN SEARCH ENGINE FOR COLLEGE</span>
+        </div>
+        <h1 class="hero-title">
+          Campus<span class="gradient-text">Connect</span>
+        </h1>
+        <p class="hero-subtitle">Your campus has more resources than you think.</p>
+        <p class="hero-tagline">Everything you need is probably already on your campus.</p>
+
+        <div class="search-container">
+          <div class="search-box" id="search-box">
+            <div class="search-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="main-search-input"
+              class="search-input"
+              placeholder="Search people, skills, resources or help…"
+              autocomplete="off"
+            />
+            <button class="search-btn" id="search-submit-btn" onclick="performSearch()">
+              Search ↵
+            </button>
+          </div>
+        </div>
+
+        <div class="example-searches">
+          <span class="example-label">Quick searches:</span>
+          <div class="example-chips">
+            <button class="chip" onclick="quickSearch('Who knows Python?')">🐍 Who knows Python?</button>
+            <button class="chip" onclick="quickSearch('Need a designer')">🎨 Need a designer</button>
+            <button class="chip" onclick="quickSearch('Who has an Arduino?')">🔌 Who has an Arduino?</button>
+            <button class="chip" onclick="quickSearch('Physics help')">📚 Physics help</button>
+            <button class="chip" onclick="quickSearch('Borrow a calculator')">🧮 Borrow a calculator</button>
+            <button class="chip" onclick="quickSearch('Who can host an event?')">🎤 Who can host an event?</button>
+            <button class="chip" onclick="quickSearch('Who has 2nd year books?')">📖 Senior Book Exchange</button>
+            <button class="chip" onclick="quickSearch('I need someone who can build a website and also knows design')">✨ Web + Design</button>
+          </div>
+        </div>
+
+        <!-- TEAM FINDER SHORTCUT BANNER -->
+        <div class="team-missing-bar">
+          <div class="tmb-label">
+            <span>⚡ <strong>Team missing a person?</strong> Match:</span>
+          </div>
+          <div class="tmb-chips">
+            <button class="tmb-chip" onclick="quickSearch('Missing a designer for hackathon')">🎨 UI/UX Designer</button>
+            <button class="tmb-chip" onclick="quickSearch('Who knows Python?')">🐍 Python / Backend</button>
+            <button class="tmb-chip" onclick="quickSearch('I need someone who can build a website and also knows design')">💻 Web + Design</button>
+            <button class="tmb-chip" onclick="quickSearch('Who knows Machine Learning?')">🤖 AI / ML Mentor</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH RESULTS -->
+    <section class="search-results-section" id="search-results-section" style="display:none;">
+      <div class="container">
+        <div class="results-header">
+          <div class="results-meta">
+            <span class="results-query-label">Results for</span>
+            <span class="results-query" id="results-query-display"></span>
+          </div>
+          <div class="results-campus-note">
+            <div class="campus-note-inner">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6EE7FF" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              We searched your campus, not the internet.
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart Match Banner -->
+        <div id="smart-match-banner" class="smart-match-banner" style="display:none;">
+          <div class="smart-match-icon">✨</div>
+          <div class="smart-match-text">
+            <div class="sm-top-row">
+              <strong>✨ SMART MATCH</strong>
+              <span class="campus-search-badge">📍 We searched your campus, not the internet.</span>
+            </div>
+            <span>We found people who may be able to help, even though they don't have the exact phrase you searched for.</span>
+          </div>
+        </div>
+
+        <!-- Results count -->
+        <div class="results-count-row" id="results-count-row"></div>
+
+        <!-- Result Tabs -->
+        <div class="result-tabs" id="result-tabs">
+          <button class="result-tab active" data-tab="all" onclick="filterResultTab('all')">All Results</button>
+          <button class="result-tab" data-tab="people" onclick="filterResultTab('people')">👤 Teammates & Skills</button>
+          <button class="result-tab" data-tab="books" onclick="filterResultTab('books')">📚 Senior Book Exchange</button>
+          <button class="result-tab" data-tab="resources" onclick="filterResultTab('resources')">🧰 Campus Gear</button>
+          <button class="result-tab" data-tab="faculty" onclick="filterResultTab('faculty')">🎓 Faculty & Mentors</button>
+          <button class="result-tab" data-tab="events" onclick="filterResultTab('events')">🎪 Events & Hackathons</button>
+        </div>
+
+        <div id="results-grid" class="results-grid"></div>
+
+        <div id="no-results" class="no-results" style="display:none;">
+          <div class="no-results-icon">🔍</div>
+          <h3>No results found</h3>
+          <p>Try a different search, or <button class="link-btn" onclick="openAddResourceModal()">add yourself or your material to Campus Connect</button></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HERO BOTTOM STATS -->
+    <section class="stats-section" id="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="stat-students">0</div>
+            <div class="stat-label">Students & Mentors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-skills">0</div>
+            <div class="stat-label">Skills in Marketplace</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-resources">0</div>
+            <div class="stat-label">Books & Gear Available</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-connects">0</div>
+            <div class="stat-label">Connections Made</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PAGE: DISCOVER ============ -->
+  <div id="page-discover" class="page" style="display:none;">
+    <div class="page-header">
+      <div class="container">
+        <div class="hero-badge" style="margin-bottom:0.75rem;">
+          <span class="badge-dot"></span>
+          <span>The College Talent & Material Marketplace</span>
+        </div>
+        <h1 class="page-title">Discover Campus Resources</h1>
+        <p class="page-desc">Every student skill, senior pass-down book, faculty mentor, and piece of hardware across campus.</p>
+      </div>
+    </div>
+    <div class="container">
+      <!-- Missing a Teammate Banner -->
+      <section class="discover-section team-matcher-box">
+        <div class="tmb-inner">
+          <div class="tmb-header">
+            <div>
+              <span class="tmb-tag">⚡ TEAM BUILDER</span>
+              <h2>Team Missing a Specific Skill?</h2>
+              <p>Forming a hackathon team, course project, or campus startup? Instantly match with students possessing the exact talent you need.</p>
+            </div>
+            <button class="btn-send" onclick="openAddResourceModal('team')">
+              + Post Team Vacancy
+            </button>
+          </div>
+          <div class="team-roles-grid" id="team-roles-grid"></div>
+        </div>
+      </section>
+
+      <!-- Trending Skills -->
+      <section class="discover-section">
+        <div class="section-header">
+          <h2>🔥 "Amazon of Skills" — Trending on Campus</h2>
+          <p>Discover students by skills they offer for collabs, tutoring, and projects</p>
+        </div>
+        <div class="trending-skills-grid" id="trending-skills-grid"></div>
+      </section>
+
+      <!-- Senior-to-Junior Pass Down & Books -->
+      <section class="discover-section">
+        <div class="section-header">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+            <div>
+              <h2>📚 Senior-to-Junior Pass-Down & Book Exchange</h2>
+              <p>Seniors donating semester textbooks, drafters, notes, and lab coats to juniors (Free / Lend)</p>
+            </div>
+            <button class="btn-add-resource" onclick="openAddResourceModal('book')">
+              + Pass Down Your Material
+            </button>
+          </div>
+        </div>
+        <div class="books-grid" id="books-grid"></div>
+      </section>
+
+      <!-- Faculty & Mentors -->
+      <section class="discover-section">
+        <div class="section-header">
+          <h2>🎓 Faculty & Professor Skill Hours</h2>
+          <p>Professors and research scholars offering specialized guidance and office hours</p>
+        </div>
+        <div class="faculty-grid" id="faculty-grid"></div>
+      </section>
+
+      <!-- Available Resources & Gear -->
+      <section class="discover-section">
+        <div class="section-header">
+          <h2>🧰 Available Hardware & Gear</h2>
+          <p>Borrow Arduinos, DSLRs, calculators, and tools from fellow students</p>
+        </div>
+        <div class="resources-grid" id="resources-grid"></div>
+      </section>
+
+      <!-- People You May Need -->
+      <section class="discover-section">
+        <div class="section-header">
+          <h2>🎯 People You May Need</h2>
+          <p>Top contributors and mentors across campus</p>
+        </div>
+        <div class="people-need-grid" id="people-need-grid"></div>
+      </section>
+
+      <!-- Events -->
+      <section class="discover-section">
+        <div class="section-header">
+          <h2>🎪 Upcoming Campus Events & Hackathons</h2>
+          <p>Join your campus community</p>
+        </div>
+        <div class="events-grid" id="events-grid"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ PAGE: PROFILE ============ -->
+  <div id="page-profile" class="page" style="display:none;">
+    <div class="container">
+      <div class="profile-layout">
+        <div class="profile-sidebar">
+          <div class="profile-card-main">
+            <div class="profile-avatar-large">A</div>
+            <h2 class="profile-name">Aarav Sharma</h2>
+            <p class="profile-dept">CSE • 2nd Year</p>
+            <p class="profile-location"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Block B, Lab 204</p>
+            <div class="profile-avail">
+              <span class="avail-dot"></span>
+              Available today — 5 PM to 8 PM
+            </div>
+            <button class="btn-connect-large" onclick="openConnectModal({name:'Aarav Sharma', skill:'Python', avatar:'A'})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Connect
+            </button>
+          </div>
+
+          <div class="profile-quick-stats">
+            <div class="pq-stat">
+              <span class="pq-num">12</span>
+              <span class="pq-label">Connections</span>
+            </div>
+            <div class="pq-stat">
+              <span class="pq-num">4</span>
+              <span class="pq-label">Resources</span>
+            </div>
+            <div class="pq-stat">
+              <span class="pq-num">34</span>
+              <span class="pq-label">Helps Given</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-main">
+          <div class="profile-section-block">
+            <h3 class="profile-section-title">Skills</h3>
+            <div class="skill-tags">
+              <span class="skill-tag st-primary">Python</span>
+              <span class="skill-tag st-primary">C++</span>
+              <span class="skill-tag st-primary">React</span>
+              <span class="skill-tag st-primary">Machine Learning</span>
+              <span class="skill-tag st-secondary">Video Editing</span>
+              <span class="skill-tag st-secondary">Arduino</span>
+              <span class="skill-tag st-secondary">Git</span>
+            </div>
+          </div>
+
+          <div class="profile-section-block">
+            <h3 class="profile-section-title">Can Help With</h3>
+            <div class="help-items">
+              <div class="help-item">
+                <div class="help-icon">💡</div>
+                <div>
+                  <strong>Hackathons</strong>
+                  <p>Project ideation, coding, pitching</p>
+                </div>
+              </div>
+              <div class="help-item">
+                <div class="help-icon">💻</div>
+                <div>
+                  <strong>Coding Projects</strong>
+                  <p>Python, C++, React development</p>
+                </div>
+              </div>
+              <div class="help-item">
+                <div class="help-icon">📊</div>
+                <div>
+                  <strong>Presentations</strong>
+                  <p>Design, structure, slide decks</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section-block">
+            <h3 class="profile-section-title">Available Resources</h3>
+            <div class="resource-items">
+              <div class="resource-item">
+                <div class="resource-icon">🔌</div>
+                <div>
+                  <strong>Arduino Uno R3</strong>
+                  <p>Available this week</p>
+                </div>
+                <span class="avail-badge">Available</span>
+              </div>
+              <div class="resource-item">
+                <div class="resource-icon">📷</div>
+                <div>
+                  <strong>Camera Tripod</strong>
+                  <p>Pick up from Block B</p>
+                </div>
+                <span class="avail-badge">Available</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section-block">
+            <h3 class="profile-section-title">Availability</h3>
+            <div class="avail-schedule">
+              <div class="avail-day">
+                <span class="day-label">Today</span>
+                <div class="avail-time active-time">5 PM — 8 PM</div>
+              </div>
+              <div class="avail-day">
+                <span class="day-label">Tomorrow</span>
+                <div class="avail-time active-time">2 PM — 6 PM</div>
+              </div>
+              <div class="avail-day">
+                <span class="day-label">Weekends</span>
+                <div class="avail-time">By appointment</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section-block">
+            <h3 class="profile-section-title">About</h3>
+            <p class="profile-bio">Hi! I'm Aarav, a second-year CSE student passionate about machine learning and open-source development. I love helping juniors with their projects and collaborating on hackathons. Feel free to reach out!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: CONNECT ============ -->
+  <div class="modal-overlay" id="connect-modal-overlay" onclick="closeConnectModal(event)">
+    <div class="modal-box" id="connect-modal-box">
+      <button class="modal-close" onclick="closeModal('connect-modal-overlay')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div id="connect-modal-content">
+        <div class="modal-header">
+          <div class="modal-avatar" id="modal-avatar">A</div>
+          <div>
+            <h3 class="modal-title">Connection Request</h3>
+            <p class="modal-subtitle" id="modal-to-name">To: Aarav Sharma</p>
+          </div>
+        </div>
+        <div class="modal-body">
+          <label class="modal-label">Your message</label>
+          <textarea class="modal-textarea" id="connect-message" rows="4"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeModal('connect-modal-overlay')">Cancel</button>
+          <button class="btn-send" id="send-request-btn" onclick="sendConnectRequest()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Request
+          </button>
+        </div>
+      </div>
+      <div id="connect-success" class="connect-success" style="display:none;">
+        <div class="success-icon">✅</div>
+        <h3>Request Sent!</h3>
+        <p id="success-message-text">Your connection request has been sent to Aarav Sharma.</p>
+        <button class="btn-send" onclick="closeModal('connect-modal-overlay')" style="margin-top:1rem;">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: ADD RESOURCE ============ -->
+  <div class="modal-overlay" id="add-resource-modal-overlay" onclick="closeAddResourceModal(event)">
+    <div class="modal-box modal-box-large" id="add-resource-modal-box">
+      <button class="modal-close" onclick="closeModal('add-resource-modal-overlay')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div id="add-resource-content">
+        <h3 class="modal-title" style="margin-bottom:0.25rem;">Add a Resource</h3>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:1.5rem;">Share your skills, resources, or willingness to help with your campus community.</p>
+
+        <div class="form-grid">
+          <div class="form-group form-full">
+            <label class="form-label">Name / Title *</label>
+            <input type="text" class="form-input" id="resource-name" placeholder="e.g. Arduino Uno, Python tutoring, DSLR Camera" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select class="form-input form-select" id="resource-type">
+              <option value="">Select category</option>
+              <option value="skill">🎓 Student Skill (Offer your talent)</option>
+              <option value="book">📚 Senior Pass-Down (Books, Notes, Drafter for Juniors)</option>
+              <option value="resource">🧰 Hardware & Gear (Arduino, Camera, Tools)</option>
+              <option value="team">🤝 Looking for Teammate (Hackathon/Project vacancy)</option>
+              <option value="faculty">🎓 Faculty / Mentorship Hours</option>
+              <option value="event">🎪 Campus Event & Workshop</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location / Department</label>
+            <input type="text" class="form-input" id="resource-location" placeholder="e.g. Block A, Hostel 3, Library, CSE Dept" />
+          </div>
+          <div class="form-group form-full">
+            <label class="form-label">Description / Offer Details *</label>
+            <textarea class="form-input form-textarea" id="resource-desc" rows="3" placeholder="Describe the skill, book edition, or team role..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Availability / Condition</label>
+            <input type="text" class="form-input" id="resource-avail" placeholder="e.g. Free for Juniors, Available this week, 5–8 PM" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pricing / Exchange Type</label>
+            <input type="text" class="form-input" id="resource-cost" placeholder="e.g. Free / Donated, Lending, Collab" />
+          </div>
+        </div>
+
+        <div class="modal-footer" style="margin-top:1.5rem;">
+          <button class="btn-cancel" onclick="closeModal('add-resource-modal-overlay')">Cancel</button>
+          <button class="btn-send" onclick="submitAddResource()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Resource
+          </button>
+        </div>
+      </div>
+      <div id="add-resource-success" class="connect-success" style="display:none;">
+        <div class="success-icon">🎉</div>
+        <h3>Resource Added!</h3>
+        <p id="add-resource-success-msg">Your resource is now live on Campus Connect.</p>
+        <button class="btn-send" onclick="closeModal('add-resource-modal-overlay'); showPage('discover');" style="margin-top:1rem;">View in Discover</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" style="display:none;"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
